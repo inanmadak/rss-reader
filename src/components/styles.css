@@ -1,0 +1,61 @@
+
+.rss-reader {
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  height: fit-content;
+}
+
+.controls-container {
+  margin: 30px auto;
+  width: 80%;
+}
+
+.control {
+  border:  1px solid #dedede;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 5px;
+  padding: 0px 5px;
+  display: inline-block;
+  outline: none;
+  height: 40px;
+}
+
+input.control {
+  width: 80%;
+}
+
+button.control {
+  width: 20%;
+  cursor: pointer;
+  color: dodgerblue;
+}
+
+.list {
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  padding: 8px;
+  width: 80%;
+  margin: 5px auto;
+}
+
+.list-item {
+  height: 50px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 4px;
+}
+
+.list-item span {
+  display: inline-block;
+}
+
+.list-item .title {
+  display: block;
+}
+
+.list-item .description {
+  color: #888;
+  margin-right: 5px;
+}
+
