@@ -9,6 +9,11 @@ export interface IRSSItem {
   title: string;
 }
 
+export interface ISelectOption {
+  label: string;
+  value: string;
+}
+
 export const parseItems = (response: string): IRSSItem[] => {
   const json = fastXmlParser.parse(response);
   return json && json.rss && json.rss.channel && json.rss.channel.item;

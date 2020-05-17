@@ -6,7 +6,7 @@ import { IRSSItem, shorten } from 'src/utils/common';
 
 import { Reader } from './Reader';
 
-const DESCRIPTION_LENGTH = 120;
+const DESCRIPTION_LENGTH = 280;
 
 export interface IListItemProps {
   item: IRSSItem;

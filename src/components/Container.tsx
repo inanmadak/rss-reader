@@ -7,54 +7,71 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { List } from './List';
 import { Pagination } from './Pagination';
+import { RSSList } from 'src/data/rssList';
 import { Reader } from './Reader';
+
+const PER_PAGE = 10;
 
 export const Container = (props) => {
 
   const [isRequesting, setIsRequesting] = useState(false);
+  const [isEditingUrl, setIsEditingUrl] = useState(false);
   const [url, setUrl] = useState('');
   const [items, setItems] = useState([] as IRSSItem[]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const getItems = useCallback(async() => {
-    if (isRequesting) {
-      return false;
+  const getItems = useCallback(async () => {
+    const abortController = new AbortController();
+    const timeout = setTimeout(() => {
+      abortController.abort();
+    }, 5000);
+
+    let resBody = '';
+
+    try {
+      resBody = await (await fetch(url, { signal: abortController.signal })).text();
+    } catch (err) {
+      // Log, clear timeour and set is requesting to false
+      // tslint:disable-next-line
+      console.log(err);
+      clearTimeout(timeout);
+      setIsRequesting(false);
+      return;
     }
-
-    setIsRequesting(true);
-    console.log(isRequesting);
-
-    const resBody = await (await fetch(url)).text();
 
     setItems(parseItems(resBody));
     setIsRequesting(false);
-  }, [url]);
+  }, [url, setItems, setIsRequesting]);
 
-  const sendRequest = useEffect(() => {
-    getItems();
-  }, [getItems]);
-
-  const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUrlChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsEditingUrl(true);
     setUrl(e.target.value);
-  }
+  }, [setUrl]);
 
-  const onPageChange = (pageNumber: number) => {
+  const onPageChange = useCallback((pageNumber: number) => {
     setCurrentPage(pageNumber);
-    // sendRequest();
-  }
+  }, [setCurrentPage]);
 
-  const onDropdownChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const onDropdownChange = useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
+    setIsEditingUrl(false);
     setUrl(e.currentTarget.value);
-    console.log(e.currentTarget.value);
-    // sendRequest();
-  }
+  }, [setUrl]);
+
+  useEffect(() => {
+    if (!isEditingUrl) {
+      setIsRequesting(true);
+      getItems();
+    }
+  }, [getItems, setIsRequesting, isEditingUrl]);
 
   const renderForm = () => {
     return (
       <div>
         <div className='controls-container'>
-            <input className='control' placeholder='Enter the RSS url here...' onChange={handleUrlChange} />
-            <button className='control' onClick={getItems}>Submit</button>
+          {renderPredefinedFeedsDropdown()}
+          <div>or</div>
+          <input className='control' value={url} placeholder='Enter the RSS url here...' onChange={handleUrlChange} />
+          <button className='control' onClick={getItems}>Submit</button>
         </div>
       </div>
     )
@@ -74,17 +91,9 @@ export const Container = (props) => {
   const renderPredefinedFeedsDropdown = () => {
     return (
       <div>
-        <select onChange={onDropdownChange}>
-          <option value='http://feeds.bbci.co.uk/news/world/rss.xml#'>BBC | World News</option>
-          <option value='http://www.polygon.com/rss/index.xml'>Polygon</option>
-          <option value='hhttp://feeds.reuters.com/reuters/technologyNews'>Reuters | Technology News</option>
-          <option value='http://feeds.reuters.com/reuters/topNews'>Reuters | Top News</option>
-          <option value='http://feeds.wired.com/wired/index'>Wired</option>
-          <option value='http://feeds.feedburner.com/Techcrunch'>Techcrunch</option>
-          <option value='http://feeds.gawker.com/kotaku/full'>Kotaku</option>
-          <option value='https://www.buzzfeed.com/tasty.xml'>Buzzfeed Tasty</option>
-          <option value='https://skysports.com/rss/12040'>Sky Sports</option>
-          <option value='https://api.foxsports.com/v1/rss?tag=soccer'>Fox Sports | Football</option>
+        <select className='control' onChange={onDropdownChange}>
+          <option disabled selected value='#'>Select a feed source</option>
+          {RSSList.map((source) => <option value={source.value}>{source.label}</option>)}
         </select>
       </div>
     )
@@ -93,9 +102,9 @@ export const Container = (props) => {
   return (
     <div className='rss-reader'>
       {renderForm()}
-      {renderPredefinedFeedsDropdown()}
-      {isRequesting ? 'Loading...' : <List items={items} />}
-      <Pagination currentPage={currentPage} total={25} perPage={10} onPageChange={onPageChange} />
+      {/* {renderPredefinedFeedsDropdown()} */}
+      {isRequesting ? 'Loading...' : <List items={items} currentPage={currentPage} perPage={PER_PAGE} onPageChange={onPageChange} />}
+      {/* <Pagination currentPage={currentPage} total={25} perPage={10} onPageChange={onPageChange} /> */}
     </div>
   );
 }

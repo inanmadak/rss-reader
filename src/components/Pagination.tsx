@@ -24,7 +24,7 @@ export const Pagination: React.FC<IPaginationProps> = ({currentPage, total, perP
           key={i}
           value={i}
           onClick={onClick}
-          className={i === currentPage ? 'current' : ''}
+          className={`control ${i === currentPage ? 'current' : ''}`}
         >
           {i}
         </button>
@@ -35,7 +35,7 @@ export const Pagination: React.FC<IPaginationProps> = ({currentPage, total, perP
   }
   return (
     <div className='pagination'>
-      {renderPageButtons()}
+        {renderPageButtons()}
     </div>
   )
 }
