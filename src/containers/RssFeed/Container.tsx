@@ -7,9 +7,7 @@ import { List } from 'components/List/List';
 
 import './styles.css';
 import { ErrorComponent } from 'components/Error/ErrorComponent';
-import { INVALID_URL } from './constants';
-
-const PER_PAGE = 10;
+import { INVALID_URL, PAGINATION_PER_PAGE } from './constants';
 
 export const Container: React.FC<any> = (props) => {
 
@@ -124,7 +122,7 @@ export const Container: React.FC<any> = (props) => {
       <ErrorComponent error={error} />
       {isRequesting
         ? 'Loading...'
-        : <List items={items} currentPage={currentPage} perPage={PER_PAGE} onPageChange={onPageChange} />
+        : <List items={items} currentPage={currentPage} perPage={PAGINATION_PER_PAGE} onPageChange={onPageChange} />
       }
     </div>
   );
