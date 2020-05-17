@@ -51,6 +51,10 @@ button.control {
   color: dodgerblue;
 }
 
+button.control:hover {
+  background-color: rgb(173, 216, 230, .3);
+}
+
 select.control {
   width: 70%;
 }
