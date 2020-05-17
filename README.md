@@ -2,8 +2,7 @@
 
 A basic project using hooks to display RSS feeds with a paginated list.
 
-![Screenshot]
-(https://i.imgur.com/DkqoYlQ.png)
+![Screenshot](/public/app-screenshot.png)
 
 --------------------------------------------------------------------------
 
