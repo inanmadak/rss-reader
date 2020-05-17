@@ -1,8 +1,7 @@
 import './App.css';
 
-import { Container } from './components/Container';
+import { Container } from './containers/RssFeed/Container';
 import React from 'react';
-import logo from './logo.svg';
 
 function App() {
   return (

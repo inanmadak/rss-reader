@@ -1,4 +1,6 @@
-import * as React from 'react';
+import React from 'react';
+
+import './styles.css';
 
 export interface IPaginationProps {
   currentPage: number;
@@ -35,7 +37,7 @@ export const Pagination: React.FC<IPaginationProps> = ({currentPage, total, perP
   }
   return (
     <div className='pagination'>
-        {renderPageButtons()}
+      {renderPageButtons()}
     </div>
   )
 }

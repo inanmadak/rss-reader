@@ -1,10 +1,11 @@
-import './styles.css';
+import React, { useCallback } from 'react';
 
-import * as React from 'react';
+import { IRSSItem } from 'utils/common';
 
-import { IRSSItem } from 'src/utils/common';
 import { ListItem } from './ListItem';
-import { Pagination } from './Pagination';
+import { Pagination } from '../Pagination/Pagination';
+
+import './styles.css';
 
 interface IListProps {
   items: IRSSItem[];
@@ -15,7 +16,15 @@ interface IListProps {
 
 export const List: React.FC<IListProps> = ({ items, currentPage, perPage, onPageChange }) => {
 
-  const renderItems = () => items.map((item, index) => <ListItem key={index} item={item} />);
+  const renderItems = useCallback(
+    () => {
+      const currentPageItems = [...items].splice((currentPage - 1) * perPage, perPage);
+      return currentPageItems.map(
+        (item, index) => <ListItem key={index} item={item} />
+      );
+    },
+    [currentPage, items, perPage]
+  );
 
   return (
     <div className='list'>

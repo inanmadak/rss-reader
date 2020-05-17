@@ -1,0 +1,14 @@
+.pagination {
+  width: 100%;
+  margin: 10px 0px;
+  text-align: right;
+}
+
+.pagination button {
+  border-left: 1px solid #999aaa;
+  width: 60px !important;
+}
+
+.pagination button.current {
+  background-color: #e4e4e4;
+}

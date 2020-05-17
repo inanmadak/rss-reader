@@ -6,16 +6,8 @@ export const RSSList = [
     value: 'http://feeds.bbci.co.uk/news/world/rss.xml#'
   },
   {
-    label: 'Reuters | Top News',
-    value: 'http://feeds.reuters.com/reuters/topNews',
-  },
-  {
     label: 'Wired',
     value: 'http://feeds.wired.com/wired/index',
-  },
-  {
-    label: 'Reuters | Technology News',
-    value: 'hhttp://feeds.reuters.com/reuters/technologyNews'
   },
   {
     label: 'Techcrunch',

@@ -1,0 +1,36 @@
+.list {
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  padding: 8px 48px;
+  max-width: 1000px;
+  min-width: 1000px;
+  min-height: 100px;
+  margin: 5px auto;
+}
+
+.list-item {
+  height: fit-content;
+  max-height: 70px;
+  border-bottom: 1px solid #ccc;
+  padding: 8px 0px;
+  overflow: hidden;
+}
+
+.list-item:nth-child(odd) {
+  background-color: rgb(222, 184, 135, .1);
+}
+
+.list-item span {
+  display: inline;
+  padding: 0px 4px;
+}
+
+.list-item .title {
+  display: block;
+}
+
+.list-item .description {
+  color: #888;
+  margin-right: 5px;
+  font-size: 14px;
+}
