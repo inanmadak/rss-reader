@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import './styles.css';
 
@@ -11,30 +11,31 @@ export interface IPaginationProps {
 
 export const Pagination: React.FC<IPaginationProps> = ({currentPage, total, perPage, onPageChange}) => {
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     onPageChange(parseInt(e.currentTarget.value, 10));
-  }
+  }, [onPageChange]);
 
   const renderPageButtons = () => {
     const numberOfButtons = Math.round(total / perPage);
     const buttons: JSX.Element[] = [];
 
-    for (let i = 1; i <= numberOfButtons; i++) {
+    for (let pageNumber = 1; pageNumber <= numberOfButtons; pageNumber++) {
       buttons.push(
         <button
-          key={i}
-          value={i}
+          key={pageNumber}
+          value={pageNumber}
           onClick={onClick}
-          className={`control ${i === currentPage ? 'current' : ''}`}
+          className={`control ${pageNumber === currentPage ? 'current' : ''}`}
         >
-          {i}
+          {pageNumber}
         </button>
       )
     }
 
     return buttons;
   }
+
   return (
     <div className='pagination'>
       {renderPageButtons()}
