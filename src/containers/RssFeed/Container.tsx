@@ -76,7 +76,18 @@ export const Container: React.FC<any> = (props) => {
     }
   }, [getItems, setIsRequesting, isEditingUrl]);
 
-  const renderForm = () => {
+  const renderPredefinedFeedsDropdown = useCallback(() => {
+    return (
+      <div>
+        <select defaultValue='#' className='control' onChange={onDropdownChange}>
+          <option disabled value='#'>Select a feed source</option>
+          {RSSList.map((source, index) => <option key={index} value={source.value}>{source.label}</option>)}
+        </select>
+      </div>
+    )
+  }, [onDropdownChange]);
+
+  const renderForm = useCallback(() => {
     return (
       <div className='form-wrapper'>
         <div className='headline'>
@@ -91,18 +102,7 @@ export const Container: React.FC<any> = (props) => {
         </div>
       </div>
     )
-  }
-
-  const renderPredefinedFeedsDropdown = () => {
-    return (
-      <div>
-        <select defaultValue='#' className='control' onChange={onDropdownChange}>
-          <option disabled value='#'>Select a feed source</option>
-          {RSSList.map((source, index) => <option key={index} value={source.value}>{source.label}</option>)}
-        </select>
-      </div>
-    )
-  }
+  }, [onSubmit, onUrlChange, renderPredefinedFeedsDropdown]);
 
   return (
     <div className='rss-reader'>

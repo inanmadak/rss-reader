@@ -16,7 +16,7 @@ export const Pagination: React.FC<IPaginationProps> = ({currentPage, total, perP
     onPageChange(parseInt(e.currentTarget.value, 10));
   }, [onPageChange]);
 
-  const renderPageButtons = () => {
+  const renderPageButtons = useCallback(() => {
     const numberOfButtons = Math.round(total / perPage);
     const buttons: JSX.Element[] = [];
 
@@ -34,7 +34,7 @@ export const Pagination: React.FC<IPaginationProps> = ({currentPage, total, perP
     }
 
     return buttons;
-  }
+  }, [perPage, currentPage, total]);
 
   return (
     <div className='pagination'>
