@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 
-import { IRSSItem } from 'utils/common';
+import { IRSSItem } from 'utils/rss';
 
 import { ListItem } from './ListItem';
 import { Pagination } from '../Pagination/Pagination';

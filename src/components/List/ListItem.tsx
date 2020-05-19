@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { IRSSItem, shorten } from 'utils/common';
+import { shorten } from 'utils/common';
+import { IRSSItem } from 'utils/rss';
 
 import './styles.css';
 

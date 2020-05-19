@@ -1,6 +1,6 @@
+import { ISelectOption } from "./interfaces";
 
-
-export const RSSList = [
+export const RSSList: ISelectOption[] = [
   {
     label: 'BBC | World News',
     value: 'http://feeds.bbci.co.uk/news/world/rss.xml#'

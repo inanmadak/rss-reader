@@ -1,13 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { RSSList } from  'data/rssList';
-import { IRSSItem, parseItems, isValidUrl } from 'utils/common';
-
 import { List } from 'components/List/List';
+import { ErrorComponent } from 'components/Error/ErrorComponent';
+import { RSSList } from  'data/rssList';
+import { api } from 'utils/api';
+import { IRSSItem, parseItems } from 'utils/rss';
+
+import { INVALID_URL, PAGINATION_PER_PAGE } from './constants';
 
 import './styles.css';
-import { ErrorComponent } from 'components/Error/ErrorComponent';
-import { INVALID_URL, PAGINATION_PER_PAGE } from './constants';
 
 export const Container: React.FC<any> = (props) => {
 
@@ -24,29 +25,16 @@ export const Container: React.FC<any> = (props) => {
   }, [setError, setIsRequesting]);
 
   const getItems = useCallback(async () => {
-    const abortController = new AbortController();
-    const timeout = setTimeout(() => {
-      abortController.abort();
-    }, 5000);
 
     let resBody = '';
 
     try {
-      if (url !== '' && !isValidUrl(url)) {
-        return reportError(new Error(INVALID_URL));
-      }
-      const response = await fetch(url, { signal: abortController.signal });
+      const response = await api.request(url);
 
-      if (!response.ok) {
-        return reportError(new Error(`Error: ${response.statusText}`));
-      }
       resBody = await response.text();
     } catch (err) {
-      // Log, clear timeour and set is requesting to false
-      // tslint:disable-next-line
-      console.log(err);
-      clearTimeout(timeout);
-      reportError({ ...err, message: INVALID_URL });
+      setItems([]);
+      reportError(err);
       return;
     }
 
