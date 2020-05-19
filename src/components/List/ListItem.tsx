@@ -18,7 +18,7 @@ export const ListItem: React.FC<IListItemProps> = ({ item }) => {
     <div className='list-item'>
       <span className='title'>{title}</span>
       <span className='description' title={description}>{shorten(description, DESCRIPTION_LENGTH)}</span>
-      <a href={link} target='_blank'>read &#8599;</a>
+      <a href={link} target='_blank' rel='noopener noreferrer'>read &#8599;</a>
     </div>
   )
 }
